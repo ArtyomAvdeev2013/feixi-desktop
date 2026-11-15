@@ -8,12 +8,12 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -22,10 +22,10 @@ jobs:
         run: npm install -g pake-cli
 
       - name: Build Feixi App
-        run: pake https://feixi1.wixsite.com/feixi --name "Feixi" --width 1280 --height 800
+        run: pake https://feixi1.wixsite.com/feixi --name "Feixi" --icon icon.ico --width 1280 --height 800
 
       - name: Upload Windows Installer
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Feixi-Windows-Installer
           path: |
