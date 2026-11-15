@@ -1,0 +1,34 @@
+name: Build Feixi Desktop App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Pake CLI
+        run: npm install -g pake-cli
+
+      - name: Build Feixi App
+        run: |
+          pake https://feixi1.wixsite.com/feixi --name "Feixi" --width 1280 --height 800 --hide-title-bar false
+
+      - name: Upload Windows Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: Feixi-Windows-Installer
+          path: |
+            *.msi
+            *.exe
